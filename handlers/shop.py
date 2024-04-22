@@ -12,12 +12,12 @@ async def shop(message:types.Message):
     kb =types.ReplyKeyboardMarkup(
         keyboard=[
             [
-                types.KeyboardButton(text='Drama'),
-                types.KeyboardButton(text='Romance'),
+                types.KeyboardButton(text='drama'),
+                types.KeyboardButton(text='romance'),
             ],
             [
                 types.KeyboardButton(text='horror'),
-                types.KeyboardButton(text='Fantastic'),
+                types.KeyboardButton(text='fantastic'),
             ]
 
         ],
@@ -26,7 +26,7 @@ async def shop(message:types.Message):
     await message.answer('choose janr', reply_markup=kb)
 
 
-genres=['drama','romantika','horror','fantastika']
+genres=['drama','romance','horror','fantastic']
 
 
 @shop_router.message(F.text.lower().in_(genres))
@@ -36,7 +36,7 @@ async def show_horor(message:types.Message):
     kb=types.ReplyKeyboardRemove()
     data = await database.fetch(
         """
-        SELECT books.* FROM books 
+        SELECT books.* FROM books
         JOIN genres ON books.genre_id = genres.id
         WHERE genres.name = ?
         """, 

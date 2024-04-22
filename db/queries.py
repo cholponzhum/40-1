@@ -40,12 +40,12 @@ class Queries:
     DROP_GENRES_TABLE = "DROP TABLE IF EXISTS genres"
     DROP_BOOKS_TABLE = "DROP TABLE IF EXISTS books"
     POPULATE_GENRES = """ 
-        INSERT INTO genres (name) VALUES ('фантастика'), 
-        ('драма'), ('романтика'), ('хоррор') 
+        INSERT INTO genres (name) VALUES ('fantastic'), 
+        ('drama'), ('romance'), ('horror')
     """ 
-    POPULATE_BOOKS = """ 
+    POPULATE_BOOKS = """
         INSERT INTO books (name, author, price, picture, genre_id) VALUES ('Бегущий в лабиринте', 'Джером Сэлинджер', 2000, 'images/book1.jpg', 1), 
-        ('Властелин Колец', 'Джон Толкин', 1000, 'images/book2.jpg', 2), 
+        ('Властелин Колец', 'Джон Толкин', 1000, 'images/book.jpg', 2), 
         ('Кафе Ночи', 'Артур Конан Дойл', 3000, 'images/book3.jpg', 3), 
-        ('Таракани', 'Артур Конан Дойл', 3000, 'images/book4.jpg', 4) 
+        ('Таракани', 'Артур Конан Дойл', 3000, 'images/book1.jpg', 4) 
     """
