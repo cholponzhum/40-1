@@ -16,6 +16,7 @@ class BookSurvey(StatesGroup):
     age=State()
     gender=State()
     genre =State()
+    done=State()
 
 
 @survey_router.message(Command("stop"))
@@ -64,14 +65,29 @@ async def process_gender(message:types.Message,state:FSMContext):
 
 
 @survey_router.message(BookSurvey.genre)
-async def process_genre(message:types.Message,state:FSMContext):
+async def process_genre(message: types.Message, state: FSMContext):
     await state.update_data(genre=message.text)
-    data=await state.get_data()
-    print ("~",data)
-
-
+    await state.set_state(BookSurvey.done)
+    data = await state.get_data()
+    await message.answer("Вы ввели следующие данные:\n"
+                        f"Имя: {data['name']}\n"
+                        f"Возраст: {data['age']}\n"
+                        f"Пол: {data['gender']}\n"
+                        f"Жанр: {data['genre']}\n"
+                        "Вы уверены, что ввели данные правильно?",
+                        )
+    
+@survey_router.message(BookSurvey.done, F.text.lower() == "да")
+async def process_done(message: types.Message, state: FSMContext):
+    data = await state.get_data()
+    print("~", data)
     await database.execute(
         "INSERT INTO survey (name,age,gender,genre) VALUES(?,?,?,?)",
          (data["name"], data["age"], data["gender"], data["genre"]))
     await message.answer("спасибо за пройденный опрос")
     await state.clear()
+
+@survey_router.message(BookSurvey.done, F.text.lower() == "нет")
+async def process_done_no(message: types.Message, state: FSMContext):
+    await state.set_state(BookSurvey.name)
+    await message.answer("Как вас зовут?")
