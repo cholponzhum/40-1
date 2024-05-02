@@ -14,8 +14,8 @@ class Queries:
             name TEXT,
             number INTEGER,
             vizit INTEGER,
-            rate TEXT,
-            clean TEXT,
+            rate INTEGER,
+            clean INTEGER,
             comments TEXT
 
         )
@@ -49,3 +49,40 @@ class Queries:
         ('Кафе Ночи', 'Артур Конан Дойл', 3000, 'images/book3.jpg', 3), 
         ('Таракани', 'Артур Конан Дойл', 3000, 'images/book1.jpg', 4) 
     """
+
+    CREATE_CUISINES_TABLE = """
+        CREATE TABLE IF NOT EXISTS cuisines(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT
+        )
+    """
+    CREATE_FOODS_TABLE = """
+        CREATE TABLE IF NOT EXISTS foods(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            price INTEGER,
+            picture TEXT,
+            cuisine_id INTEGER,
+            FOREIGN KEY (cuisine_id) REFERENCES cuisines(id)
+
+        )
+    """
+    DROP_CUISINES_TABLE = "DROP TABLE IF EXISTS cuisines"
+    DROP_FOODS_TABLE = "DROP TABLE IF EXISTS foods"
+    POPULATE_CUISINES = """
+        INSERT INTO cuisines (name) VALUES ('Китайская кухня'),
+        ('Восточная кухня'),
+        ('Турецкая кухня'),
+        ('Европейская кухня')
+    """
+
+    POPULATE_FOODS = """
+        INSERT INTO foods (name, price, picture, cuisine_id) VALUES ('Курица', 1000, 'images/kitayskie.jpg', 1),
+        ('Салат', 500, 'images/vostok.jpg', 2),
+        ('Пицца', 1500, 'images/turkiye.jpg', 3),
+        ('Салат', 500, 'images/europa.jpg', 4)
+    """
+
+
+
+

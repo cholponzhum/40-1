@@ -10,6 +10,12 @@ class Database:
         async with aiosqlite.connect(self.path) as db:
             await db.execute(Queries.CREATE_SURVEY_TABLE)
             await db.execute(Queries.CREATE_OTZIV_TABLE)
+            await db.execute(Queries.DROP_FOODS_TABLE)
+            await db.execute(Queries.DROP_CUISINES_TABLE)
+            await db.execute(Queries.CREATE_CUISINES_TABLE)
+            await db.execute(Queries.CREATE_FOODS_TABLE)
+            await db.execute(Queries.POPULATE_CUISINES)
+            await db.execute(Queries.POPULATE_FOODS)
             await db.execute(Queries.DROP_BOOKS_TABLE)
             await db.execute(Queries.DROP_GENRES_TABLE)
             await db.execute(Queries.CREATE_GENRES_TABLE)
@@ -18,7 +24,7 @@ class Database:
             await db.execute(Queries.POPULATE_BOOKS)
             await db.commit()
 
-    async def execute(self,query:str,params:tuple|None=None)-> None:
+    async def execute(self,query:str,params:tuple | None=None)-> None:
         async with aiosqlite.connect(self.path) as db:
             await db.execute(query,params or())
             await db.commit()

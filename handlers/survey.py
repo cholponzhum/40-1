@@ -7,8 +7,7 @@ from config import database
 
 survey_router=Router()
 
-db=sqlite3.connect("db.sqlite3")
-cursor=db.cursor()
+
 
 
 class BookSurvey(StatesGroup):
